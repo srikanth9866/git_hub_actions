@@ -27,7 +27,7 @@ jobs:
       uses: aws-actions/configure-aws-credentials@v2
       with:
         aws-region: ${{ env.AWS_REGION }}
-        role-to-assume: arn:aws:iam::YOUR_ACCOUNT_ID:role/github-actions-role
+        role-to-assume: arn:aws:iam::198413840664:role/GitHubActionsRole
         role-session-name: GitHubActionsTerraformDeploy
 
     - name: Setup Terraform
@@ -49,3 +49,7 @@ jobs:
     - name: Terraform Apply
       if: github.ref == 'refs/heads/main' && github.event_name == 'push'
       run: terraform apply -input=false -auto-approve
+
+    - name: Show Terraform Outputs
+      if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+      run: terraform output
