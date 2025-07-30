@@ -1,5 +1,14 @@
+terraform {
+  backend "s3" {
+    bucket         = "srikanth-s21-bucket"
+    key            = "github-actions-terraform.tfstate"
+    region         = "us-east-1"
+    dynamodb_table = "terraform-lock-table"
+  }
+}
+
 provider "aws" {
-  region = "ap-south-1"  
+  region = "us-east-1"  
 }
 
 resource "aws_vpc" "main" {
@@ -9,13 +18,13 @@ resource "aws_vpc" "main" {
 resource "aws_subnet" "main_a" {
   vpc_id            = aws_vpc.main.id
   cidr_block        = "10.0.1.0/24"
-  availability_zone = "ap-south-1a"
+  availability_zone = "us-east-1a"
 }
 
 resource "aws_subnet" "main_b" {
   vpc_id            = aws_vpc.main.id
   cidr_block        = "10.0.2.0/24"
-  availability_zone = "ap-south-1b"
+  availability_zone = "us-east-1b"
 }
 
 resource "aws_iam_role" "eks_service_role" {
