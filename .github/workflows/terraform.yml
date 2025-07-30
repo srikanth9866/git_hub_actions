@@ -46,10 +46,6 @@ jobs:
       run: terraform plan -input=false -no-color
       continue-on-error: true
 
-    - name: Terraform Apply
+    - name: Terraform Destroy
       if: github.ref == 'refs/heads/main' && github.event_name == 'push'
-      run: terraform apply -input=false -auto-approve
-
-    - name: Show Terraform Outputs
-      if: github.ref == 'refs/heads/main' && github.event_name == 'push'
-      run: terraform output
+      run: terraform destroy -input=false -auto-approve
